@@ -3,6 +3,8 @@ from django.db import connections
 from django.shortcuts import redirect
 from django.http import Http404
 from django.db.utils import IntegrityError
+from django.db.models import Sum
+from django.http import JsonResponse
 
 from app.utils import namedtuplefetchall, clamp
 from app.forms import ImoForm
@@ -98,9 +100,8 @@ def aggregation(request, page=1):
     }
     return render(request, 'aggregation.html', context)
 
-# visual - pie chart
-
-def pie_chart(request):
+# visual - pie chart and bar chart
+def visual(request):
     with connections['default'].cursor() as cursor:
         cursor.execute('SELECT cr.ship_type AS ship_type, COUNT(cr.imo) AS count, min(cr.technical_efficiency_number) AS min, max(cr.technical_efficiency_number) AS max, AVG(cr.technical_efficiency_number) AS avg FROM co2emission_reduced cr GROUP BY cr.ship_type')
         results = cursor.fetchall()
@@ -112,7 +113,7 @@ def pie_chart(request):
         labels.append(i[0])
         data.append(i[1])
 
-    return render(request, 'pie_chart.html', {
+    return render(request, 'visual.html', {
         'labels': labels,
         'data': data,
     })
