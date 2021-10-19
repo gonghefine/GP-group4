@@ -80,11 +80,10 @@ def aggregation(request, page=1):
 
     with connections['default'].cursor() as cursor:
         cursor.execute('SELECT cr.ship_type AS ship_type, min(cr.technical_efficiency_number) AS min, max(cr.technical_efficiency_number) AS max, AVG(cr.technical_efficiency_number) AS avg FROM co2emission_reduced cr GROUP BY cr.ship_type')
-        count = cursor.fetchone()[0]
-        num_pages = (count - 1) // PAGE_SIZE + 1
-        page = clamp(page, 1, num_pages)
         rows = namedtuplefetchall(cursor)
-
+        num_pages = 1
+        page = clamp(page, 1, num_pages)
+        
     imo_deleted = request.GET.get('deleted', False)
     if imo_deleted:
         msg = f'✔ IMO {imo_deleted} deleted'
