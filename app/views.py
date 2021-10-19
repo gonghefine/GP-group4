@@ -12,6 +12,9 @@ COLUMNS = [
     'imo',
     'ship_name',
     'technical_efficiency_number'
+    'Ship Type'
+    'Issue Date'
+    'Expiry Date'
 ]
 
 
@@ -44,7 +47,6 @@ def emissions(request, page=1):
         num_pages = (count - 1) // PAGE_SIZE + 1
         page = clamp(page, 1, num_pages)
 
-        ", ".join(['ship_type','issue_date','expiry_date']) # add columns 'ship_type','issue_date','expiry_date'
         offset = (page - 1) * PAGE_SIZE
         cursor.execute(f'''
             SELECT {", ".join(COLUMNS)}
