@@ -12,9 +12,6 @@ COLUMNS = [
     'imo',
     'ship_name',
     'technical_efficiency_number'
-    'ship_type'
-    'issue_date'
-    'expiry_date'
 ]
 
 
