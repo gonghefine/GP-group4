@@ -101,7 +101,7 @@ def aggregation(request, page=1):
     return render(request, 'aggregation.html', context)
 
 # visual - pie chart and bar chart
-def visual(request):
+def pie_chart(request):
     with connections['default'].cursor() as cursor:
         cursor.execute('SELECT cr.ship_type AS ship_type, COUNT(cr.imo) AS count, min(cr.technical_efficiency_number) AS min, max(cr.technical_efficiency_number) AS max, AVG(cr.technical_efficiency_number) AS avg FROM co2emission_reduced cr GROUP BY cr.ship_type')
         results = cursor.fetchall()
@@ -113,7 +113,7 @@ def visual(request):
         labels.append(i[0])
         data.append(i[1])
 
-    return render(request, 'visual.html', {
+    return render(request, 'pie_chart.html', {
         'labels': labels,
         'data': data,
     })
