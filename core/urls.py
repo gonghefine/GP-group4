@@ -1,7 +1,10 @@
 from django.urls import path
 from django.contrib import admin
+from django.urls import path
+from mysite.core import views
 
 import app.views
+
 
 admin.autodiscover()
 
@@ -13,7 +16,8 @@ urlpatterns = [
     path('emissions/<int:page>', app.views.emissions, name='emissions'),
     path('aggregation/', app.views.aggregation, name='aggregation'),
     path('aggregation/<int:page>', app.views.aggregation, name='aggregation'),
-    path('aggregation/', app.views.visual, name='visual'),
+    
+    path('visual/', views.visual, name='visual')
     path('emissions/imo/', app.views.emission_detail, name='emission_detail'),
     path('emissions/imo/<int:imo>', app.views.emission_detail, name='emission_detail'),
     path('admin/', admin.site.urls),
