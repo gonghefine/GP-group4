@@ -100,22 +100,18 @@ def aggregation(request, page=1):
 
 # visual - pie chart
 from django.shortcuts import render
-from mysite.core.models import City
-
-class ship_type(models.Model):
-    name = models.CharField(max_length=50)
-class co2emission(models.Model):
-    ship_type = models.ForeignKey(Ship_type, on_delete=models.CASCADE)
-    number = models.PositiveIntegerField()
     
-def visual_pie_chart(request):
+def pie_chart(request):
+    with connections['default'].cursor() as cursor:
+        cursor.execute('SELECT cr.ship_type AS ship_type, COUNT(cr.imo) AS count, min(cr.technical_efficiency_number) AS min, max(cr.technical_efficiency_number) AS max, AVG(cr.technical_efficiency_number) AS avg FROM co2emission_reduced cr GROUP BY cr.ship_type')
+        results = cursor.fetchall()
+    
     labels = []
     data = []
-
-    queryset = co2emission.objects.order_by('number')
-    for co2emission in queryset:
-        labels.append(co2emission.ship_type)
-        data.append(co2emission.number)
+    
+    for i in results:   
+        labels.append(i[0])
+        data.append(i[1])
 
     return render(request, 'pie_chart.html', {
         'labels': labels,
