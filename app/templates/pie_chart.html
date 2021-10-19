@@ -31,12 +31,35 @@
       }
     };
     
-   
+   var config2 = {
+      type: 'bar',
+            data: {
+              labels: {{ labels|safe }},
+              datasets: [{
+                label: 'Number',
+                backgroundColor: 'blue',
+                data: {{ data|safe }}
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Number Bar Chart'
+              }
+            }
+    };
+    
 
     window.onload = function() {
       var ctx1 = document.getElementById('pie-chart').getContext('2d');
       window.myPie = new Chart(ctx1, config1);
       
+      var ctx2 = document.getElementById('population-chart').getContext('2d');
+      window.myBar = new Chart(ctx2, config2);
     };
 
   </script>
