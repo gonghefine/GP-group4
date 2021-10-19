@@ -97,7 +97,31 @@ def aggregation(request, page=1):
         'order_by': order_by
     }
     return render(request, 'aggregation.html', context)
-##
+
+# visual - pie chart
+from django.shortcuts import render
+from mysite.core.models import City
+
+class ship_type(models.Model):
+    name = models.CharField(max_length=50)
+class co2emission(models.Model):
+    ship_type = models.ForeignKey(Ship_type, on_delete=models.CASCADE)
+    number = models.PositiveIntegerField()
+    
+def visual_pie_chart(request):
+    labels = []
+    data = []
+
+    queryset = co2emission.objects.order_by('number')
+    for co2emission in queryset:
+        labels.append(co2emission.ship_type)
+        data.append(co2emission.number)
+
+    return render(request, 'pie_chart.html', {
+        'labels': labels,
+        'data': data,
+    })
+
 
 def insert_update_values(form, post, action, imo):
     """
