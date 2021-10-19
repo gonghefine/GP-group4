@@ -79,7 +79,7 @@ def aggregation(request, page=1):
     order_by = order_by if order_by in COLUMNS else 'imo'
 
     with connections['default'].cursor() as cursor:
-        cursor.execute('SELECT COUNT(*) FROM co2emission_reduced')
+        cursor.execute('SELECT cr.ship_type, min(cr.technical_efficiency_number), max(cr.technical_efficiency_number), AVG(cr.technical_efficiency_number FROM co2emission_reduced cr GROUP BY cr.ship_type')
         count = cursor.fetchone()[0]
         num_pages = (count - 1) // PAGE_SIZE + 1
         page = clamp(page, 1, num_pages)
