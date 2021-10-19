@@ -84,14 +84,7 @@ def aggregation(request, page=1):
         num_pages = (count - 1) // PAGE_SIZE + 1
         page = clamp(page, 1, num_pages)
 
-        offset = (page - 1) * PAGE_SIZE
-        cursor.execute(f'''
-            SELECT {", ".join(COLUMNS)}
-            FROM co2emission_reduced
-            ORDER BY {order_by}
-            OFFSET %s
-            LIMIT %s
-        ''', [offset, PAGE_SIZE])
+       
         rows = namedtuplefetchall(cursor)
 
     imo_deleted = request.GET.get('deleted', False)
