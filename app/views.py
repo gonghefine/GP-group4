@@ -79,7 +79,7 @@ def aggregation(request, page=1):
     order_by = order_by if order_by in COLUMNS else 'imo'
 
     with connections['default'].cursor() as cursor:
-        cursor.execute('SELECT cr.ship_type AS ship_type, min(cr.technical_efficiency_number) AS min, max(cr.technical_efficiency_number) AS max, AVG(cr.technical_efficiency_number) AS avg FROM co2emission_reduced cr GROUP BY cr.ship_type')
+        cursor.execute('SELECT cr.ship_type AS ship_type, COUNT(cr.imo) AS count, min(cr.technical_efficiency_number) AS min, max(cr.technical_efficiency_number) AS max, AVG(cr.technical_efficiency_number) AS avg FROM co2emission_reduced cr GROUP BY cr.ship_type')
         rows = namedtuplefetchall(cursor)
         num_pages = 1
         page = clamp(page, 1, num_pages)
