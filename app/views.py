@@ -166,22 +166,35 @@ def fact_table(request, page=1):
     }
     return render(request, 'fact_table.html', context)
 
-# queries visitation
+# cube queries visitation
 def q_table(request):
     with connections['default'].cursor() as cursor:
-        cursor.execute('SELECT cr.ship_type AS ship_type, COUNT(cr.imo) AS count, min(cr.technical_efficiency_number) AS min, max(cr.technical_efficiency_number) AS max, AVG(cr.technical_efficiency_number) AS avg FROM co2emission_reduced cr GROUP BY cr.ship_type')
+        cursor.execute('SELECT dt.issue_day_of_week, dt.issue_quarter, COUNT(f.imo) FROM fact f, date_time dt WHERE f.issue_date = dt.issue_date GROUP BY CUBE(dt.issue_day_of_week, dt.issue_quarter);')
         results = cursor.fetchall()
     
-    labels = []
-    data = []
+    # by week
+    results1 = results[22:28]
+    labels1 = []
+    data1 = []
     
-    for i in results:   
-        labels.append(i[0])
-        data.append(i[1])
+    for i in results1:   
+        labels1.append(i[0])
+        data1.append(i[2])
+    
+    # by quter
+    results2 = results[29:31]
+    labels2 = []
+    data2 = []
+    
+    for i in results2:   
+        labels2.append(i[1])
+        data2.append(i[2])
 
     return render(request, 'q_table.html', {
-        'labels': labels,
-        'data': data,
+        'labels1': labels1,
+        'data1': data1,
+        'labels2': labels2,
+        'data2': data2,
     })
 
 
