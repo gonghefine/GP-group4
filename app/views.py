@@ -26,7 +26,8 @@ COLUMNS_f = [
     'total_emissions',
     'time_spent',
     'emission_distance'
-    'emission_transport'
+    'issue_date'
+    'verifier_name'
 ]
 
 
