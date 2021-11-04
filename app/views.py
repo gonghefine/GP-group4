@@ -166,8 +166,26 @@ def fact_table(request, page=1):
     }
     return render(request, 'fact_table.html', context)
 
-#
+# queries visitation
+def q_table(request):
+    with connections['default'].cursor() as cursor:
+        cursor.execute('SELECT cr.ship_type AS ship_type, COUNT(cr.imo) AS count, min(cr.technical_efficiency_number) AS min, max(cr.technical_efficiency_number) AS max, AVG(cr.technical_efficiency_number) AS avg FROM co2emission_reduced cr GROUP BY cr.ship_type')
+        results = cursor.fetchall()
+    
+    labels = []
+    data = []
+    
+    for i in results:   
+        labels.append(i[0])
+        data.append(i[1])
 
+    return render(request, 'q_table.html', {
+        'labels': labels,
+        'data': data,
+    })
+
+
+#
 def insert_update_values(form, post, action, imo):
     """
     Inserts or updates database based on values in form and action to take,
