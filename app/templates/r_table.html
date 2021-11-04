@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %} visual {% endblock %}
+{% load static %}
+
+{% block content %}
+  <div id="container1" style="width: 75%;">
+    <canvas id="pie-chart"></canvas>
+  </div>
+
+  <div id="container2" style="width: 75%;">
+    <canvas id="population-chart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+    var config1 = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data_country|safe }},
+          backgroundColor: [
+            '#696969', '#808080', '#A9A9A9'
+          ],
+          label: 'Number'
+        }],
+        labels: {{ labels_country|safe }}
+      },
+      options: {
+        responsive: true,
+        title: {
+                display: true,
+                text: 'The Number of Issue Ships by Country'
+              }
+      }
+    };
+    
+   var config2 = {
+      type: 'bar',
+            data: {
+              labels: {{ labels_city|safe }},
+              datasets: [{
+                label: 'Number',
+                backgroundColor: 'black',
+                data: {{ data_city|safe }}
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'The Number of Issue Ships by City'
+              }
+            }
+    };
+    
+
+    window.onload = function() {
+      var ctx1 = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx1, config1);
+      
+      var ctx2 = document.getElementById('population-chart').getContext('2d');
+      window.myBar = new Chart(ctx2, config2);
+    };
+
+  </script>
+
+{% endblock %}
