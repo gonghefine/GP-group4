@@ -20,7 +20,7 @@ COLUMNS = [
 ]
 
 COLUMNS_f = [
-    'imo',
+    'ship_index',
     'fuel_consumption',
     'total_emissions',
     'time_spent',
@@ -133,7 +133,7 @@ def fact_table(request, page=1):
     """Shows the fact table page"""
     msg = None
     order_by = request.GET.get('order_by', '')
-    order_by = order_by if order_by in COLUMNS_f else 'imo'
+    order_by = order_by if order_by in COLUMNS_f else 'ship_index'
 
     with connections['default'].cursor() as cursor:
         cursor.execute('SELECT COUNT(*) FROM fact')
