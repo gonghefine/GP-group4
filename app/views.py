@@ -173,7 +173,7 @@ def q_table(request):
         results = cursor.fetchall()
     
     # by week
-    results1 = results[22:28]
+    results1 = results[22:29]
     labels1 = []
     data1 = []
     
@@ -182,7 +182,7 @@ def q_table(request):
         data1.append(i[2])
     
     # by quter
-    results2 = results[29:31]
+    results2 = results[29:32]
     labels2 = []
     data2 = []
     
