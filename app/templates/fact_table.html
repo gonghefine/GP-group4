@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %} Emissions {% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="padding-bottom: 50px;">
+  <h2>Measures of Ships</h2>
+  {% if msg %}
+    <span class="text-success h4">{{ msg }}</span>
+  {% endif %}
+  <p>Showing page {{ page }} of {{ num_pages }} pages</p>
+  <button
+    class="btn btn-primary"
+    {% if page == 1 %} disabled {% endif %}
+    onclick="location.href='/fact_table/{{page|add:"-1"}}?order_by={{ order_by }}';"
+  >
+    ❮ Previous
+  </button>
+  <button
+    class="btn btn-primary"
+    {% if page == num_pages %} disabled {% endif %}
+    onclick="location.href='/fact_table/{{page|add:"1"}}?order_by={{ order_by }}';"
+  >
+    Next ❯
+  </button>
+  <button
+    class="btn btn-success"
+    onclick="location.href='/fact_table/imo/';"
+    style="float: right;"
+  >
+    Insert new
+  </button>
+  <br/>
+  <br/>
+  <div class="table-responsive">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th class="ordering" onclick="window.location='/fact_table/?order_by=imo'">IMO</th>
+          <th class="ordering" onclick="window.location='/fact_table/?order_by=name'">Ship Name</th>
+          <th class="ordering" onclick="window.location='/fact_table/?order_by=fuel_consumption'">Fuel Consumption</th>
+          <th class="ordering" onclick="window.location='/fact_table/?order_by=total_emissions'">Total Emission</th>
+          <th class="ordering" onclick="window.location='/fact_table/?order_by=time_spent'">Time Spent</th>
+          <th class="ordering" onclick="window.location='/fact_table/?order_by=emission_distance'">Emission Distance</th>
+          <th class="ordering" onclick="window.location='/fact_table/?order_by='issue_date''">Issue Date</th>
+          <th class="ordering" onclick="window.location='/fact_table/?order_by='verifier_name''">Verifier_Name</th>
+        </tr>
+      </thead>
+      {% for row in rows %}
+        <tr style="cursor:pointer;" onclick="window.location='/fact_table/imo/{{ row.imo }}'">
+          {% for val in row %}
+          <td>{{ val|default:'' }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}
