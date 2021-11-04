@@ -168,7 +168,7 @@ def fact_table(request, page=1):
 # cube queries visitation
 def q_table(request):
     with connections['default'].cursor() as cursor:
-        cursor.execute('SELECT dt.issue_day_of_week, dt.issue_quarter, COUNT(f.imo) FROM fact f, date_time dt WHERE f.issue_date = dt.issue_date GROUP BY CUBE(dt.issue_day_of_week, dt.issue_quarter);')
+        cursor.execute('SELECT dt.issue_day_of_week, dt.issue_quarter, COUNT(f.ship_index) FROM fact f, date_time dt WHERE f.issue_date = dt.issue_date GROUP BY CUBE(dt.issue_day_of_week, dt.issue_quarter);')
         results = cursor.fetchall()
     
     # by week
@@ -199,7 +199,7 @@ def q_table(request):
 # rollup queries visitation
 def r_table(request):
     with connections['default'].cursor() as cursor:
-        cursor.execute('SELECT v.Verifier_Country, v.Verifier_City, COUNT(f.imo) FROM fact f, date_time dt, verifier v WHERE f.issue_date = dt.issue_date AND f.verifier_name = v.verifier_Name GROUP BY ROLLUP(v.Verifier_Country, v.Verifier_City);')
+        cursor.execute('SELECT v.Verifier_Country, v.Verifier_City, COUNT(f.ship_index) FROM fact f, date_time dt, verifier v WHERE f.issue_date = dt.issue_date AND f.verifier_name = v.verifier_Name GROUP BY ROLLUP(v.Verifier_Country, v.Verifier_City);')
         result = cursor.fetchall()
     
     # by city
