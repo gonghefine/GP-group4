@@ -197,6 +197,39 @@ def q_table(request):
         'data2': data2,
     })
 
+# rollup queries visitation
+def r_table(request):
+    with connections['default'].cursor() as cursor:
+        cursor.execute('SELECT v.Verifier_Country, v.Verifier_City, COUNT(f.imo) FROM fact f, date_time dt, verifier v WHERE f.issue_date = dt.issue_date AND f.verifier_name = v.verifier_Name GROUP BY ROLLUP(v.Verifier_Country, v.Verifier_City);')
+        result = cursor.fetchall()
+    
+    # by city
+    result_city = result[1:17]
+    label_city = []
+    data_city = []
+    
+    for i in results_city:   
+        labels_city.append(i[1])
+        data_city.append(i[2])
+    
+    # by country
+    results_country = result[17:27]
+    labels_country = []
+    data_country = []
+    
+    for i in results_country:   
+        labels_country.append(i[0])
+        data_country.append(i[2])
+
+    return render(request, 'r_table.html', {
+        'labels_city': labels_city,
+        'data_city': data_city,
+        'labels_country': labels_country,
+        'data_country': data_country,
+    })
+
+
+#
 
 #
 def insert_update_values(form, post, action, imo):
