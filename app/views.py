@@ -204,8 +204,8 @@ def r_table(request):
         result = cursor.fetchall()
     
     # by city
-    result_city = result[1:17]
-    label_city = []
+    results_city = result[1:17]
+    labels_city = []
     data_city = []
     
     for i in results_city:   
