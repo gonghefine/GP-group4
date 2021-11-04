@@ -17,5 +17,7 @@ urlpatterns = [
     path('visual/', app.views.visual, name='visual'),
     path('fact_table/', app.views.fact_table, name='fact_table'),
     path('fact_table/<int:page>', app.views.fact_table, name='fact_table'),
+    path('q_table/', app.views.q_table, name='q_table'),
+    path('q_table/<int:page>', app.views.q_table, name='q_table'),
     path('admin/', admin.site.urls),
 ]
