@@ -129,7 +129,7 @@ def visual(request):
     })
 
 # fact table
-def fact(request, page=1):
+def fact_table(request, page=1):
     """Shows the fact table page"""
     msg = None
     order_by = request.GET.get('order_by', '')
