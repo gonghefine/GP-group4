@@ -19,5 +19,6 @@ urlpatterns = [
     path('fact_table/<int:page>', app.views.fact_table, name='fact_table'),
     path('q_table/', app.views.q_table, name='q_table'),
     path('q_table/<int:page>', app.views.q_table, name='q_table'),
+    path('r_table/', app.views.r_table, name='r_table'),
     path('admin/', admin.site.urls),
 ]
