@@ -21,7 +21,6 @@ COLUMNS = [
 
 COLUMNS_f = [
     'imo',
-    'name',
     'fuel_consumption',
     'total_emissions',
     'time_spent',
