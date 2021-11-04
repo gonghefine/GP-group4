@@ -18,27 +18,31 @@
       type: 'pie',
       data: {
         datasets: [{
-          data: {{ data|safe }},
+          data: {{ data2|safe }},
           backgroundColor: [
-            '#696969', '#808080', '#A9A9A9', '#ececec', '#F1F1F1', '#ddd', '#eee', '#f8f8f8', '#e4e4e4', '#e5e5e5', '#ccc', '#666', 'c2c2c2'
+            '#696969', '#808080', '#A9A9A9'
           ],
           label: 'Number'
         }],
-        labels: {{ labels|safe }}
+        labels: {{ labels2|safe }}
       },
       options: {
-        responsive: true
+        responsive: true,
+        title: {
+                display: true,
+                text: 'The Number of Issue Ships by Quarter'
+              }
       }
     };
     
    var config2 = {
       type: 'bar',
             data: {
-              labels: {{ labels|safe }},
+              labels: {{ labels1|safe }},
               datasets: [{
                 label: 'Number',
                 backgroundColor: 'black',
-                data: {{ data|safe }}
+                data: {{ data1|safe }}
               }]          
             },
             options: {
@@ -48,7 +52,7 @@
               },
               title: {
                 display: true,
-                text: 'Number Bar Chart'
+                text: 'The Number of Issue Ships by The Day of The Week'
               }
             }
     };
